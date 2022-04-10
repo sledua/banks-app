@@ -2,3 +2,18 @@ h4 {
 	color: black;
 	font-size: 3rem;
 }
+.newInput {
+	width: 100%;
+	grid-template-columns: repeat(2, 1fr);
+	justify-content: center;
+}
+.form {
+	display: flex;
+	flex-direction: column;
+	> label {
+		> input {
+			margin-left: 2rem;
+		}
+	}
+	
+}
