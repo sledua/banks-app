@@ -1,12 +1,14 @@
 import React from "react";
 import './index.scss';
-
+function isValid ({valid, touched, shouldValidate}) {
+	return !valid && shouldValidate && touched
+}
 const Input = props => {
 	const inType = props.type || 'text';
 	const htmlFor = `${inType}-${Math.random()}`;
 	const clss = [];
-	console.log(clss)
-	if (true) {
+
+	if (isValid(props)) {
 		clss.push('invalid');
 	}
 	return (
@@ -19,7 +21,10 @@ const Input = props => {
 				value={props.value}
 				onChange={props.onChange}
 			/>
-			<span>{props.errorMassage}</span>
+			{
+				isValid(props) ? <span>{props.errorMassage || 'Join text'}</span> : null
+			}
+			
 		</div>
 	)
 }
