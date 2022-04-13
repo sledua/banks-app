@@ -6,13 +6,7 @@ import Button from '../UI/Button';
 const Banc = () => {
 	const [listing, setListing] = useState({
 		list: [],
-		controls: {
-			banc: '',
-			rate: '',
-			maxLoan: '',
-			doun: '',
-			loan: ''
-		}
+		isLoad: true,
 	})
 	const [isFormValid, setIsFormValid] = useState(false)
 	const [inputs, setInputs] = useState({
@@ -155,21 +149,70 @@ const Banc = () => {
 			)
 		})
 	}
+	useEffect(()=>{
+		const loadListing = async () =>  {
+			await	fetch('https://bank-banc-default-rtdb.europe-west1.firebasedatabase.app/list.json')
+			.then(res =>  res.json())
+			.then(result => setListing((listing) => ({...listing, list: result, isLoad: false})))
+			}
+		loadListing().catch (console.error)
+	},[])
+	const renderSore = () => {
+		
+			return Object.keys(listing.list).map((controls, index) => {
+				const control = listing.list[controls][0];
+				return (
+					<tr key={index}>
+						<td>{control.banc.value}</td>
+						<td >{control.rate.value}</td>
+						<td >{control.maxLoan.value}</td>
+						<td >{control.minDoun.value}</td>
+						<td >{control.loan.value}</td>
+					</tr>
+					
+				)
+			})
+		
+		
+	}
 	const submitHandler = event => {
 		event.preventDefault()
 	}
-	const saveBancHandler = event => {
+
+	const saveBancHandler = async event => {
 		event.preventDefault()
-		const bancList = listing.list
-		const index = bancList.length + 1
-		const bancItem = {
-			id: index,
-			banc: inputs.banc.value,
+		try {
+			await fetch('https://bank-banc-default-rtdb.europe-west1.firebasedatabase.app/list.json', {
+				method: 'POST',
+				body: JSON.stringify([inputs]),
+				headers: {'Content-Type': 'application/json'}
+			})
+			.then(
+				(error) => {
+					console.log(error);
+			})
+			setInputs((inputs) => ({...inputs,banc: {...inputs.banc, value: ''}}))
+			setInputs((inputs) => ({...inputs,rate: {...inputs.rate, value: ''}}))
+			setInputs((inputs) => ({...inputs,maxLoan: {...inputs.maxLoan, value: ''}}))
+			setInputs((inputs) => ({...inputs,minDoun: {...inputs.minDoun, value: ''}}))
+			setInputs((inputs) => ({...inputs,loan: {...inputs.loan, value: ''}}))
+		} catch(error) {
+			console.log('post error', error)
 		}
-		setListing((listing) => ({...listing,
-				...listing.list.push(bancItem) }))
-		console.log(listing)
-	}
+		// const bancList = listing.list
+		// const index = bancList.length + 1
+		// const bancItem = {
+		// 	id: index,
+		// 	data: new Date(),
+		// 	banc: inputs.banc.value,
+		// 	rate: inputs.rate.value,
+		// 	maxLoan: inputs.maxLoan.value,
+		// 	minDoun: inputs.minDoun.value,
+		// 	loan: inputs.loan.value
+		// }
+		// setListing((listing) => ({...listing,...listing.list.push(bancItem)}))
+		
+	}  
 	const newBancHandler = event => {
 		event.preventDefault()
 	}
@@ -179,20 +222,25 @@ const Banc = () => {
 	return (
 		<div className='container--banc'>
 		<h4>New Banc</h4>
-		<p>Працюючі варіанти</p>
+		
 			<div className='newInput grid'>
 				<form className='form' onSubmit={submitHandler}>
 					{renderInputs()}
 				</form>
-				<div className='show'>
-					<h5>Prev</h5>
-					<ul>
-						<li><span>Name:</span><span>Your ining</span></li>
-					</ul>
-					<pre>
-					{JSON.stringify(isFormValid, null, 2)}
-					</pre>
-				</div>
+				<table className='grid'>
+					<thead>
+						<tr>
+							<th>Banc name</th>
+							<th>Interest rate</th>
+							<th>max Loan</th>
+							<th>min Doun</th>
+							<th>loan</th>
+						</tr>
+					</thead>
+					<tbody>
+						{renderSore()}
+					</tbody>
+				</table>
 			</div>
 			<hr/>
 			<div className='group-btn'>
@@ -204,7 +252,7 @@ const Banc = () => {
 				<Button
 					type="success"
 					onClick={saveBancHandler}
-					// disabled={listing.list.length === 0}
+					disabled={!isFormValid}
 					>
 						Save</Button>
 				<Button
