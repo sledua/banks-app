@@ -9,7 +9,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 	overflow: hidden;
+	height: 100vh;
 	max-width: 144rem;
+	background: linear-gradient(-121deg,  #fdfbfb 0%,#eaedee 100%);
+	//background-color: #fff;
 }
 .grid {
 	display: inline-grid;

@@ -1,7 +1,19 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import './index.scss';
 import Input from '../UI/Input';
+import Button from '../UI/Button';
+
 const Banc = () => {
+	const [listing, setListing] = useState({
+		list: [],
+		controls: {
+			banc: '',
+			rate: '',
+			maxLoan: '',
+			doun: '',
+			loan: ''
+		}
+	})
 	const [isFormValid, setIsFormValid] = useState(false)
 	const [inputs, setInputs] = useState({
 		banc: {
@@ -70,13 +82,13 @@ const Banc = () => {
 			}
 		}
 	})
-	
-	function validateControl (value, validation) {
+	const validateControl = (value, validation) => {
 		if(!validation) {
 			return true
 		}
 		let isValid = true
 		if (validation.required) {
+			
 			isValid = value.trim() !== '' && isValid
 		}
 		if (validation.rate) {
@@ -89,6 +101,7 @@ const Banc = () => {
 
 		}
 		if (validation.minLength) {
+			
 			isValid = value.length >= validation.minLength && isValid
 		}
 		if (validation.banc) {
@@ -96,8 +109,12 @@ const Banc = () => {
 		}
 		return isValid
 	}
-	
-	function onChangeHandler(event, controlName) {
+	useEffect(()=>{
+		let isFValid = true;
+		Object.keys(inputs).forEach(name => isFValid = inputs[name].valid && isFValid)
+		setIsFormValid(isFValid)
+	},[inputs])
+	const onChangeHandler = (event, controlName) => {
 		const formControl = {...inputs}
 		const control = {...formControl[controlName]}
 		setInputs((inputs) => ({
@@ -115,15 +132,10 @@ const Banc = () => {
 		setInputs((inputs) => ({
 			...inputs, 
 			[controlName]: {
-				...inputs[controlName], valid : validateControl(control.value, control.validation)
+				...inputs[controlName], valid : validateControl(event.target.value, control.validation)
 			}
 		}))
-		let isFValid = true;
-		Object.keys(inputs).forEach(name => {
-			isFValid = inputs[name].valid && isFValid
-		})
-		setIsFormValid(isFValid)
-		console.log(`state`,isFormValid,`let`,isFValid)
+		
 	}
 	
 	function renderInputs() {
@@ -143,12 +155,33 @@ const Banc = () => {
 			)
 		})
 	}
+	const submitHandler = event => {
+		event.preventDefault()
+	}
+	const saveBancHandler = event => {
+		event.preventDefault()
+		const bancList = listing.list
+		const index = bancList.length + 1
+		const bancItem = {
+			id: index,
+			banc: inputs.banc.value,
+		}
+		setListing((listing) => ({...listing,
+				...listing.list.push(bancItem) }))
+		console.log(listing)
+	}
+	const newBancHandler = event => {
+		event.preventDefault()
+	}
+	function pushBancHandler () {
+
+	}
 	return (
 		<div className='container--banc'>
 		<h4>New Banc</h4>
 		<p>Працюючі варіанти</p>
 			<div className='newInput grid'>
-				<form className='form'>
+				<form className='form' onSubmit={submitHandler}>
 					{renderInputs()}
 				</form>
 				<div className='show'>
@@ -161,10 +194,23 @@ const Banc = () => {
 					</pre>
 				</div>
 			</div>
+			<hr/>
 			<div className='group-btn'>
-				<button>New Banc</button>
-				<button>Save Local</button>
-				<button>Push</button>
+				<Button
+					onClick={newBancHandler}
+					type="primary"
+					disabled={!isFormValid}>
+						New Banc</Button>
+				<Button
+					type="success"
+					onClick={saveBancHandler}
+					// disabled={listing.list.length === 0}
+					>
+						Save</Button>
+				<Button
+				type="error"
+					onClick={pushBancHandler}
+				>Push</Button>
 			</div>
 		</div>
 	);
