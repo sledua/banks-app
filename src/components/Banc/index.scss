@@ -1,11 +1,8 @@
-h4 {
-	color: black;
-	font-size: 3rem;
-}
 .newInput {
 	width: 100%;
 	grid-template-columns: minmax(25rem, 1fr) minmax(35rem, 2fr);
 	justify-content: center;
+	gap: 1.5rem;
 }
 .form {
 	display: flex;

@@ -13,7 +13,7 @@ const Banc = () => {
 		banc: {
 			value: '',
 			type: 'text',
-			label: 'Banc',
+			label: 'Bank name',
 			errorMassage: 'error',
 			valid: false,
 			touched: false,
@@ -26,7 +26,7 @@ const Banc = () => {
 		rate: {
 			value: '',
 			type: 'number',
-			label: 'Interest rate',
+			label: 'Interest Rate',
 			errorMassage: 'error rate',
 			valid: false,
 			touched: false,
@@ -39,7 +39,7 @@ const Banc = () => {
 		maxLoan: {
 			value: '',
 			type: 'number',
-			label: 'max Loan',
+			label: 'Maximum loan',
 			errorMassage: 'error rate',
 			valid: false,
 			touched: false,
@@ -52,7 +52,7 @@ const Banc = () => {
 		minDoun: {
 			value: '',
 			type: 'number',
-			label: 'min Doun',
+			label: 'Minimum down payment',
 			errorMassage: 'error rate',
 			valid: false,
 			touched: false,
@@ -65,7 +65,7 @@ const Banc = () => {
 		loan: {
 			value: '',
 			type: 'number',
-			label: 'loan',
+			label: 'Loan term',
 			errorMassage: 'error rate',
 			valid: false,
 			touched: false,
@@ -199,19 +199,6 @@ const Banc = () => {
 		} catch(error) {
 			console.log('post error', error)
 		}
-		// const bancList = listing.list
-		// const index = bancList.length + 1
-		// const bancItem = {
-		// 	id: index,
-		// 	data: new Date(),
-		// 	banc: inputs.banc.value,
-		// 	rate: inputs.rate.value,
-		// 	maxLoan: inputs.maxLoan.value,
-		// 	minDoun: inputs.minDoun.value,
-		// 	loan: inputs.loan.value
-		// }
-		// setListing((listing) => ({...listing,...listing.list.push(bancItem)}))
-		
 	}  
 	const newBancHandler = event => {
 		event.preventDefault()
@@ -221,8 +208,6 @@ const Banc = () => {
 	}
 	return (
 		<div className='container--banc'>
-		<h4>New Banc</h4>
-		
 			<div className='newInput grid'>
 				<form className='form' onSubmit={submitHandler}>
 					{renderInputs()}
@@ -230,11 +215,11 @@ const Banc = () => {
 				<table className='grid'>
 					<thead>
 						<tr>
-							<th>Banc name</th>
-							<th>Interest rate</th>
-							<th>max Loan</th>
-							<th>min Doun</th>
-							<th>loan</th>
+							<th>Bank name</th>
+							<th>Interest Rate</th>
+							<th>Maximum loan</th>
+							<th>Down payment</th>
+							<th>Loan term</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -242,23 +227,13 @@ const Banc = () => {
 					</tbody>
 				</table>
 			</div>
-			<hr/>
 			<div className='group-btn'>
-				<Button
-					onClick={newBancHandler}
-					type="primary"
-					disabled={!isFormValid}>
-						New Banc</Button>
 				<Button
 					type="success"
 					onClick={saveBancHandler}
 					disabled={!isFormValid}
 					>
 						Save</Button>
-				<Button
-				type="error"
-					onClick={pushBancHandler}
-				>Push</Button>
 			</div>
 		</div>
 	);
