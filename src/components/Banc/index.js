@@ -200,12 +200,6 @@ const Banc = () => {
 			console.log('post error', error)
 		}
 	}  
-	const newBancHandler = event => {
-		event.preventDefault()
-	}
-	function pushBancHandler () {
-
-	}
 	return (
 		<div className='container--banc'>
 			<div className='newInput grid'>
