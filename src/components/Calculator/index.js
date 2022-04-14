@@ -1,8 +1,8 @@
-import React, { useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './index.scss';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-
+import Select from '../UI/Select';
 const Calculator = () => {
 	const [inputs, setInputs] = useState({
 		loan: {
@@ -30,6 +30,9 @@ const Calculator = () => {
 			}
 		},
 	})
+	const [bank, setBank] = useState({
+		value: 'RobinS'
+	})
 	const onChangeHandler = () => {
 
 	}
@@ -56,14 +59,28 @@ const Calculator = () => {
 	const serchHendler = () => {
 
 	}
+	const selectChengeHendler = event => {
+		setBank({value: event.target.value})
+	}
 	return (
 		<div className='grid container--calc'>
 			<div className='inputs grid'>
 				<form className='form'>
 				{renderInput()}
+				<Select
+				label='Select bank'
+				value={bank.value}
+				onChange={selectChengeHendler}
+				options={[
+					{text: 'RobinS', value: 1},
+					{text: 'XobinS', value: 2},
+					{text: 'SobinS', value: 3},
+					{text: 'GGobinS', value: 4}
+				]}
+				/>
 				</form>
 				
-				{/* select */}
+				
 				<div className='group-btn'>
 					<Button
 					onClick={serchHendler}
