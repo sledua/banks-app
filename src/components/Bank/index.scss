@@ -1,0 +1,40 @@
+.newInput {
+	width: 100%;
+	grid-template-columns: minmax(25rem, 1fr) minmax(35rem, 2fr);
+	justify-content: center;
+	gap: 1.5rem;
+}
+.form {
+	display: flex;
+	flex-direction: column;
+	> label {
+		> input {
+			margin-left: 2rem;
+		}
+	}
+}
+table {
+	border-collapse: collapse;
+	grid-template-rows: repeat(10, minmax(0, 3rem));
+	grid-template-columns: minmax(1rem, 1.3fr) minmax(1rem, 1.67fr) minmax(1.1rem, 1.37fr) minmax(1.1rem, 1.37fr) minmax(1rem, 1.1fr);
+	min-width: 100%;
+	align-items: center;
+	text-align: center;
+	thead, tbody, tr {
+		display: contents;
+	}
+	th, td {
+		font-size: 1.4rem;
+		padding: 0.5rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		border-bottom: 1px solid #000;
+	}
+	th {
+		font-size: 1.3rem;
+		position: sticky;
+		top: 0;
+		text-align: center;
+	}
+}

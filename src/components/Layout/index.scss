@@ -2,6 +2,11 @@
 	width: 100%;
 	&--banc {
 		padding: 0 6rem;
-		
+	}
+	&--calc {
+		padding: 0 6rem;
+		grid-template-columns: minmax(15rem, 1fr) minmax(35rem, 2fr);
+		gap: 1.5rem;
+		justify-content: center;
 	}
 }

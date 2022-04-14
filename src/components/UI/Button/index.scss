@@ -1,0 +1,36 @@
+button {
+	display: inline-block;
+	padding: 1rem 2rem;
+	border-radius: 0.2em;
+	border: none;
+	background: linear-gradient(to right,  #9999a4 0%,#60606b 100%);
+	color: #fff;
+	margin-right: 1.5rem;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 1.3rem;
+	cursor: pointer; 
+	> :focus {
+		outline: none;
+	}
+	> :active {
+		box-shadow: inset 2px 2px 1px rgba(0,0,0, .3);
+	}
+}
+.disabled {
+	background: linear-gradient(to right, #848585 0%, #5d698196 100%) !important;
+	color: #000;
+	cursor: not-allowed;
+}
+.error {
+	background: linear-gradient(to right,  #c41432 0%,#fc5a44 100%);
+	color: #edf3f3;
+}
+.success {
+	background: linear-gradient(32deg,  #9b8de5 0%,#8465e6 100%);
+	color: #f3f7f3;
+}
+.primary {
+	background: linear-gradient(-13deg,  #007bcb 0%,#27a3df 100%,#6e7ff3 100%);
+	color: #edf3f3;
+}
