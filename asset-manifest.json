@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.49f51341.css",
-    "main.js": "/static/js/main.e0f3599e.js",
-    "static/js/787.59038abf.chunk.js": "/static/js/787.59038abf.chunk.js",
-    "index.html": "/index.html",
-    "main.49f51341.css.map": "/static/css/main.49f51341.css.map",
-    "main.e0f3599e.js.map": "/static/js/main.e0f3599e.js.map",
-    "787.59038abf.chunk.js.map": "/static/js/787.59038abf.chunk.js.map"
+    "main.css": "/banks-app/static/css/main.49f51341.css",
+    "main.js": "/banks-app/static/js/main.9ed1ef24.js",
+    "static/js/787.59038abf.chunk.js": "/banks-app/static/js/787.59038abf.chunk.js",
+    "index.html": "/banks-app/index.html",
+    "main.49f51341.css.map": "/banks-app/static/css/main.49f51341.css.map",
+    "main.9ed1ef24.js.map": "/banks-app/static/js/main.9ed1ef24.js.map",
+    "787.59038abf.chunk.js.map": "/banks-app/static/js/787.59038abf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49f51341.css",
-    "static/js/main.e0f3599e.js"
+    "static/js/main.9ed1ef24.js"
   ]
 }
