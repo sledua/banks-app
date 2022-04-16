@@ -14,7 +14,7 @@ const Select = props => {
 					return(
 						<option
 							key={option.value + index} 
-							value={option.value}
+							value={option.text}
 						>
 							{option.text}
 						</option>

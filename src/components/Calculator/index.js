@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.scss';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 import Select from '../UI/Select';
 const Calculator = () => {
+	const [value, setValue] = useState()
+	const [isFormValid, setIsFormValid] = useState(false)
+	const [bank, setBank] = useState({value: ''});
+	//console.log(value)
 	const [inputs, setInputs] = useState({
 		loan: {
 			value: '',
@@ -14,7 +18,7 @@ const Calculator = () => {
 			touched: false,
 			validation: {
 				required: true,
-				minLength: 5
+				minLength: 3
 			}
 		},
 		payment: {
@@ -26,15 +30,44 @@ const Calculator = () => {
 			touched: false,
 			validation: {
 				required: true,
-				minLength: 5
+				minLength: 3
 			}
 		},
 	})
-	const [bank, setBank] = useState({
-		value: 'RobinS'
-	})
-	const onChangeHandler = () => {
-
+	useEffect(()=>{
+		let isFValid = true;
+		Object.keys(inputs).forEach(name => isFValid = inputs[name].valid && isFValid)
+		setIsFormValid(isFValid)
+	},[inputs])
+	useEffect(() => {
+		const value = JSON.parse(localStorage.getItem('values'));
+		if (value) {
+			setValue(value)
+		}
+	}, [])
+	
+	const onChangeHandler = (event, controlInput) => {
+		const forms = {...inputs};
+		const control = {...forms[controlInput]};
+		setInputs((inputs) => ({
+			...inputs,[controlInput]:{...inputs[controlInput], value: event.target.value}
+		}))
+		setInputs((inputs) => ({
+			...inputs,[controlInput]: {...inputs[controlInput], touched : true}
+		}))
+		setInputs((inputs) => ({
+			...inputs,[controlInput]: {...inputs[controlInput], valid: validateControl(event.target.value, control.validation)}
+		}))
+	}
+	const validateControl = (value, validation) => {
+		if(!validation) {
+			return true
+		}
+		let isValid = true;
+		if (validation.minLength) {
+			isValid = value.length >= validation.minLength && isValid
+		}
+		return isValid
 	}
 	const renderInput = () => {
 		return Object.keys(inputs).map((name, index) => {
@@ -53,38 +86,58 @@ const Calculator = () => {
 			)
 		})
 	}
-	const renderSore = () => {
-
+	const renderSelect = () => {
+		if (value) {
+			const options = Object.keys(value).map((se, index) => {
+				let selectOptions = {
+					value: index,
+					text: value[se][0].banc.value,
+				}
+				return selectOptions;
+			})
+			return (
+					<Select
+						label='Select bank'
+						key={options.value}
+						value={options.value}
+						onChange={selectChengeHendler}
+						options={options}
+					/>
+				)}
 	}
-	const serchHendler = () => {
+	
+	const renderSore = () => {
+		//забрать перемение after seleck + serch
+
+		//посчитать минимальний взнос
+
+		//посчитать мес платеж
+
+		//собрать статику
+	}
+	const serchHendler = event => {
+		event.preventDefault()
 
 	}
 	const selectChengeHendler = event => {
-		setBank({value: event.target.value})
+		console.log({value: event.target.value, index: event.target.key})
+		if(!event.target.value){
+			setBank({value: event.target.value})
+		}
+		
 	}
 	return (
 		<div className='grid container--calc'>
 			<div className='inputs grid'>
 				<form className='form'>
-				{renderInput()}
-				<Select
-				label='Select bank'
-				value={bank.value}
-				onChange={selectChengeHendler}
-				options={[
-					{text: 'RobinS', value: 1},
-					{text: 'XobinS', value: 2},
-					{text: 'SobinS', value: 3},
-					{text: 'GGobinS', value: 4}
-				]}
-				/>
+					{renderInput()}
+					{renderSelect()}
 				</form>
-				
-				
 				<div className='group-btn'>
 					<Button
 					onClick={serchHendler}
 					type="primary"
+					disabled={!isFormValid}
 					>Serch</Button>
 				</div>
 			</div>
