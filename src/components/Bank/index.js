@@ -2,11 +2,12 @@ import React, { useEffect, useState} from 'react';
 import './index.scss';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
+import Loader from '../UI/Loader';
 
 const Banc = () => {
 	const [listing, setListing] = useState({
 		list: [],
-		isLoad: true,
+		isLoad: false,
 	})
 	const [isFormValid, setIsFormValid] = useState(false)
 	const [inputs, setInputs] = useState({
@@ -156,9 +157,9 @@ const Banc = () => {
 			.then(result => setListing((listing) => ({...listing, list: result, isLoad: false})))
 			}
 		loadListing().catch (console.error)
-	},[])
+		localStorage.setItem('values', JSON.stringify(listing.list))
+	},[listing])
 	const renderSore = () => {
-		
 			return Object.keys(listing.list).map((controls, index) => {
 				const control = listing.list[controls][0];
 				return (
@@ -169,11 +170,8 @@ const Banc = () => {
 						<td >{control.minDoun.value}</td>
 						<td >{control.loan.value}</td>
 					</tr>
-					
 				)
 			})
-		
-		
 	}
 	const submitHandler = event => {
 		event.preventDefault()
@@ -206,20 +204,26 @@ const Banc = () => {
 				<form className='form' onSubmit={submitHandler}>
 					{renderInputs()}
 				</form>
-				<table className='grid'>
-					<thead>
-						<tr>
-							<th>Bank name</th>
-							<th>Interest Rate</th>
-							<th>Maximum loan</th>
-							<th>Down payment</th>
-							<th>Loan term</th>
-						</tr>
-					</thead>
-					<tbody>
+				<div className='grid'>
+				{listing.isLoad ? <Loader/> :
+				<table className='grid preload'>
+						<thead>
+							<tr>
+								<th>Bank name</th>
+								<th>Interest Rate</th>
+								<th>Maximum loan</th>
+								<th>Down payment</th>
+								<th>Loan term</th>
+							</tr>
+						</thead>
+						
+						<tbody>
 						{renderSore()}
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+					}
+				</div>
+					
 			</div>
 			<div className='group-btn'>
 				<Button
