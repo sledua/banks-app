@@ -6,8 +6,7 @@ import Select from '../UI/Select';
 const Calculator = () => {
 	const [value, setValue] = useState()
 	const [isFormValid, setIsFormValid] = useState(false)
-	const [bank, setBank] = useState({value: ''});
-	//console.log(value)
+	const [bank, setBank] = useState();
 	const [inputs, setInputs] = useState({
 		loan: {
 			value: '',
@@ -104,6 +103,7 @@ const Calculator = () => {
 						options={options}
 					/>
 				)}
+		
 	}
 	
 	const renderSore = () => {
@@ -115,16 +115,25 @@ const Calculator = () => {
 
 		//собрать статику
 	}
-	const serchHendler = event => {
-		event.preventDefault()
-
-	}
 	const selectChengeHendler = event => {
-		console.log({value: event.target.value, index: event.target.key})
-		if(!event.target.value){
+		if(event.target.value){
 			setBank({value: event.target.value})
 		}
-		
+	}
+	const serchHendler = event => {
+		event.preventDefault()
+		const output = {};
+		// eslint-disable-next-line array-callback-return
+		Object.keys(value).map(i => {
+			if (bank.value === value[i][0].banc.value) {
+				return (output.banc = value[i][0].banc.value,
+						output.loan = Number(value[i][0].loan.value),
+						output.maxLoan = Number(value[i][0].maxLoan.value),
+						output.minDoun = Number(value[i][0].minDoun.value),
+						output.rate = Number(value[i][0].rate.value))
+			}
+		})
+		console.log(output);
 	}
 	return (
 		<div className='grid container--calc'>

@@ -130,9 +130,7 @@ const Banc = () => {
 				...inputs[controlName], valid : validateControl(event.target.value, control.validation)
 			}
 		}))
-		
 	}
-	
 	function renderInputs() {
 		return  Object.keys(inputs).map((controlName, index) => {
 			const control = inputs[controlName];
@@ -160,18 +158,18 @@ const Banc = () => {
 		localStorage.setItem('values', JSON.stringify(listing.list))
 	},[listing])
 	const renderSore = () => {
-			return Object.keys(listing.list).map((controls, index) => {
-				const control = listing.list[controls][0];
-				return (
-					<tr key={index}>
-						<td>{control.banc.value}</td>
-						<td >{control.rate.value}</td>
-						<td >{control.maxLoan.value}</td>
-						<td >{control.minDoun.value}</td>
-						<td >{control.loan.value}</td>
-					</tr>
-				)
-			})
+		return Object.keys(listing.list).map((controls, index) => {
+			const control = listing.list[controls][0];
+			return (
+				<tr key={index}>
+					<td>{control.banc.value}</td>
+					<td >{control.rate.value}</td>
+					<td >{control.maxLoan.value}</td>
+					<td >{control.minDoun.value}</td>
+					<td >{control.loan.value}</td>
+				</tr>
+			)
+		})
 	}
 	const submitHandler = event => {
 		event.preventDefault()
